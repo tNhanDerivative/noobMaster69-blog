@@ -4,7 +4,48 @@ services:
   app:
     build:
       context: .
-    ports:
-      - 8000:8000
+    container_name: NoobDjango
+
+    env_file:
+      - .env
     volumes:
-      - ./src_blog:/src_blog
+      - static-data:/vol/web 
+
+    depends_on:
+      - db
+
+
+  db:
+    image: "postgres:13-alpine"
+    container_name: NoobPostgreSQL
+
+    env_file:
+      - .env
+
+    environment:
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASS}
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+
+      
+  proxy:
+    build:
+      context: ./nginx
+    restart: always
+
+    volumes:
+      - static-data:/vol/static
+      
+    ports:
+      - 80:8000
+    depends_on:
+      - app
+
+
+
+volumes:
+  postgres-data:
+  static-data:
+
