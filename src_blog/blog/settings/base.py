@@ -88,9 +88,9 @@ WSGI_APPLICATION = 'blog.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'NOOB_BLOG',
-        'USER': 'postgres',
-        'PASSWORD': os.getenv('DB_PASSWORD'),
+        'NAME': os.getenv('DB_NAME'),
+        'USER': os.getenv('DB_USER'),
+        'PASSWORD': os.getenv('DB_PASS'),
         'HOST': 'localhost',
         'PORT': '5432',
     }
@@ -133,14 +133,16 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
-MEDIA_URL = '/media/'
-STATIC_URL = '/static/'
+MEDIA_URL = 'static/media/'
+STATIC_URL = 'static/static/'
+
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
     ]
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+STATIC_ROOT = os.path.join(BASE_DIR,'vol','web','staticfiles')
+MEDIA_ROOT = os.path.join(BASE_DIR,'vol','web','mediafiles')
 
 
 # Default primary key field type
